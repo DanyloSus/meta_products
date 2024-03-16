@@ -2,15 +2,21 @@ import 'package:meta_products/classes/user.dart';
 
 final List<User> users = [
   User(
-    usersUsername: "raul_marin",
-    usersImage: "raul",
-    usersSubscribers: ["Roma"],
-    usersSubscriptions: ["Roma"],
+    "raul_marin",
+    "raul",
+    ["Roma"],
+    ["Roma"],
   ),
   User(
-    usersUsername: "Roma",
-    usersImage: "Roma",
-    usersSubscribers: ["raul_marin"],
-    usersSubscriptions: ["raul_marin"],
+    "Roma",
+    "Roma",
+    ["raul_marin"],
+    ["raul_marin"],
+  ),
+  User(
+    "Krunal Modi",
+    "krunal",
+    ["raul_marin", "Roma"],
+    ["raul_marin"],
   ),
 ];

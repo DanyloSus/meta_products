@@ -1,21 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import "package:meta_products/data/users.dart";
+import 'package:meta_products/data/users.dart';
+
+import '../classes/post_data.dart';
 
 class Post extends StatefulWidget {
-  const Post({
-    super.key,
-    required this.userName,
-    required this.description,
-    required this.image,
-    required this.comments,
-    required this.likes,
-  });
+  const Post(
+      {super.key,
+      required this.name,
+      required this.time,
+      required this.content,
+      required this.comments,
+      required this.likes});
 
-  final String userName;
-  final String description;
-  final String image;
-  final int comments;
+  final String name;
+  final String time;
+  final String content;
+  final List<PostData> comments;
   final int likes;
 
   @override
@@ -25,7 +26,7 @@ class Post extends StatefulWidget {
 class _PostState extends State<Post> {
   bool isLiked = false;
 
-  void heartTouch() {
+  heartTap() {
     setState(() {
       isLiked = !isLiked;
     });
@@ -33,151 +34,118 @@ class _PostState extends State<Post> {
 
   @override
   Widget build(BuildContext context) {
+    final image =
+        users.where((element) => element.username == widget.name).single.image;
+
     return Container(
       decoration: const BoxDecoration(
-        border: Border(
-          top: BorderSide(
-            color: Color.fromRGBO(212, 212, 212, 1),
-          ),
-          bottom: BorderSide(
-            color: Color.fromRGBO(212, 212, 212, 1),
-          ),
-        ),
-      ),
-      padding: const EdgeInsets.symmetric(vertical: 11),
-      child: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.fromLTRB(15, 13, 15, 0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Row(
-                  children: [
-                    Image.asset(
-                      "assets/images/profile/${users.firstWhere((element) => element.username == widget.userName).image}.png",
-                      width: 32,
-                      height: 32,
-                    ),
-                    const SizedBox(
-                      width: 9,
-                    ),
-                    Text(
-                      widget.userName,
-                      style: const TextStyle(fontWeight: FontWeight.bold),
-                    ),
-                  ],
-                ),
-                SvgPicture.asset(
-                  "assets/icons/dots.svg",
-                  semanticsLabel: "more",
-                )
-              ],
+          border: Border(
+              bottom: BorderSide(color: Color.fromRGBO(242, 242, 242, 1)))),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 16),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Image.asset(
+              "assets/images/profile/$image.png",
+              width: 36,
+              height: 36,
             ),
-          ),
-          const SizedBox(
-            height: 11,
-          ),
-          Image.asset(
-            "assets/images/posts/${widget.image}.jpg",
-            width: double.infinity,
-            fit: BoxFit.contain,
-          ),
-          const SizedBox(
-            height: 13,
-          ),
-          Padding(
-            padding: const EdgeInsets.fromLTRB(7, 13, 15, 0),
-            child: Column(
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Row(
-                      children: [
-                        IconButton(
-                          onPressed: heartTouch,
-                          icon: SvgPicture.asset(
-                            "assets/icons/${isLiked ? "heart_on" : "heart"}.svg",
-                            height: 23,
-                          ),
-                          style: IconButton.styleFrom(
-                              fixedSize: const Size(23, 23)),
-                        ),
-                        const SizedBox(
-                          width: 8,
-                        ),
-                        SvgPicture.asset(
-                          "assets/icons/comments.svg",
-                          height: 23,
-                        ),
-                        const SizedBox(
-                          width: 17,
-                        ),
-                        SvgPicture.asset(
-                          "assets/icons/send.svg",
-                          height: 23,
-                        ),
-                      ],
-                    ),
-                    SvgPicture.asset(
-                      "assets/icons/favourite.svg",
-                      height: 23,
-                    ),
-                  ],
-                ),
-              ],
+            const SizedBox(
+              width: 8,
             ),
-          ),
-          Padding(
-            padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
-            child: SizedBox(
-              width: double.infinity,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const SizedBox(
-                    height: 9,
-                  ),
-                  Text(
-                    "${isLiked ? widget.likes + 1 : widget.likes} вподобань",
-                    style: const TextStyle(
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 6,
-                  ),
-                  Row(
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                SizedBox(
+                  width: 400,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        widget.userName,
+                        widget.name,
                         style: const TextStyle(
-                          fontWeight: FontWeight.bold,
-                        ),
+                            fontSize: 16, fontWeight: FontWeight.w600),
                       ),
-                      const SizedBox(
-                        width: 6,
-                      ),
-                      Text(
-                        widget.description,
-                      ),
+                      Row(
+                        children: [
+                          Text(
+                            widget.time,
+                            style: const TextStyle(
+                                fontSize: 12,
+                                color: Color.fromRGBO(160, 160, 160, 1)),
+                          ),
+                          const SizedBox(
+                            width: 8,
+                          ),
+                          SvgPicture.asset(
+                            "assets/icons/dots.svg",
+                            width: 24,
+                            height: 24,
+                          ),
+                        ],
+                      )
                     ],
                   ),
-                  const SizedBox(
-                    height: 6,
+                ),
+                Text(
+                  widget.content,
+                  style: const TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w300,
                   ),
-                  Text(
-                    "Переглянути всі коментарі (${widget.comments})",
-                    style: const TextStyle(
-                      color: Color.fromRGBO(142, 142, 142, 1),
+                ),
+                Row(
+                  children: [
+                    IconButton(
+                      onPressed: heartTap,
+                      icon: SvgPicture.asset(
+                        "assets/icons/${isLiked ? "heart_on" : "heart"}.svg",
+                      ),
+                      style: IconButton.styleFrom(
+                        fixedSize: const Size(0, 24),
+                      ),
+                    ),
+                    SvgPicture.asset(
+                      "assets/icons/message.svg",
+                      width: 24,
+                      height: 24,
+                    ),
+                    const SizedBox(
+                      width: 12,
+                    ),
+                    SvgPicture.asset(
+                      "assets/icons/repost.svg",
+                      width: 24,
+                      height: 24,
+                    ),
+                    const SizedBox(
+                      width: 12,
+                    ),
+                    SvgPicture.asset(
+                      "assets/icons/send.svg",
+                      width: 24,
+                      height: 24,
+                    ),
+                  ],
+                ),
+                Text(
+                  "${widget.comments.length} replies  ·  ${widget.likes} likes",
+                  style: const TextStyle(
+                    color: Color.fromRGBO(
+                      160,
+                      160,
+                      160,
+                      1,
                     ),
                   ),
-                ],
-              ),
-            ),
-          ),
-        ],
+                )
+              ],
+            )
+          ],
+        ),
       ),
     );
   }

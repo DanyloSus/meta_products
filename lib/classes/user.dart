@@ -1,20 +1,10 @@
 class User {
-  User({
-    required String usersUsername,
-    required String usersImage,
-    required List<String> usersSubscribers,
-    required List<String> usersSubscriptions,
-  }) {
-    username = usersUsername;
-    image = usersImage;
-    subscribers = usersSubscribers;
-    subscriptions = usersSubscriptions;
-  }
+  User(this.username, this.image, this.subscribers, this.subscriptions);
 
-  late String username;
-  late String image;
-  late List<String> subscribers;
-  late List<String> subscriptions;
+  final String username;
+  final String image;
+  final List<String> subscribers;
+  final List<String> subscriptions;
 
   void addSubscription(String newSubscription) =>
       subscriptions.add(newSubscription);

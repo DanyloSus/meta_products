@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:meta_products/data/posts.dart';
+import 'package:meta_products/widgets/post.dart';
 
 class Posts extends StatefulWidget {
   const Posts({super.key});
@@ -30,35 +30,43 @@ class _PostsState extends State<Posts> with SingleTickerProviderStateMixin {
             indicatorColor: const Color.fromRGBO(38, 38, 38, 1),
             labelColor: const Color.fromRGBO(38, 38, 38, 1),
             unselectedLabelColor: const Color.fromRGBO(0, 0, 0, 0.4),
-            tabs: [
+            labelStyle: const TextStyle(fontSize: 16),
+            tabs: const [
               Tab(
-                icon: SvgPicture.asset("assets/icons/grid.svg"),
+                text: "Threds",
               ),
               Tab(
-                icon: SvgPicture.asset("assets/icons/tags.svg"),
+                text: "Replies",
               ),
             ],
           ),
         ),
-        SizedBox(
-          height: 300,
-          child: TabBarView(controller: _controller, children: [
-            GridView.count(
-              crossAxisCount: 3,
-              children: [
-                ...posts.where((element) => element.username == "Roma").map(
-                      (e) =>
-                          (Image.asset("assets/images/posts/${e.image}.jpg")),
-                    )
-              ],
-            ),
-            const Center(
-              child: Text(
-                "Поки нічого...",
-                style: TextStyle(color: Color.fromRGBO(0, 0, 0, 0.6)),
+        SingleChildScrollView(
+          child: SizedBox(
+            height: 999,
+            child: TabBarView(controller: _controller, children: [
+              Column(
+                children: [
+                  ...posts
+                      .where((element) => element.username == "Krunal Modi")
+                      .map(
+                        (e) => (Post(
+                            name: e.username,
+                            time: e.time,
+                            content: e.description,
+                            comments: e.comments,
+                            likes: e.likes)),
+                      ),
+                ],
               ),
-            )
-          ]),
+              const Center(
+                child: Text(
+                  "Поки нічого...",
+                  style: TextStyle(color: Color.fromRGBO(0, 0, 0, 0.6)),
+                ),
+              )
+            ]),
+          ),
         )
       ],
     );

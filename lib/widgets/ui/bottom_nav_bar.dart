@@ -19,7 +19,7 @@ class CustomBottomNavigation extends StatelessWidget {
             padding: const EdgeInsets.only(top: 4.0),
             child: SvgPicture.asset(
               "assets/icons/${page == 0 ? "home_on" : "home"}.svg",
-              height: 23,
+              height: 32,
             ),
           ),
           label: "123",
@@ -27,28 +27,28 @@ class CustomBottomNavigation extends StatelessWidget {
         BottomNavigationBarItem(
           icon: SvgPicture.asset(
             "assets/icons/${page == 1 ? "search_on" : "search"}.svg",
-            height: 23,
+            height: 32,
           ),
           label: "",
         ),
         BottomNavigationBarItem(
           icon: SvgPicture.asset(
-            "assets/icons/add.svg",
-            height: 23,
+            "assets/icons/${page == 2 ? "write_on" : "write"}.svg",
+            height: 32,
           ),
           label: "",
         ),
         BottomNavigationBarItem(
           icon: SvgPicture.asset(
-            "assets/icons/${page == 3 ? "heart_on" : "heart"}.svg",
-            height: 23,
+            "assets/icons/${page == 3 ? "like_on" : "like"}.svg",
+            height: 32,
           ),
           label: "",
         ),
         BottomNavigationBarItem(
-          icon: Image.asset(
-            "assets/images/profile/${page == 4 ? "Roma_on" : "Roma"}.png",
-            height: 23,
+          icon: SvgPicture.asset(
+            "assets/icons/${page == 4 ? "account_on" : "account"}.svg",
+            height: 32,
           ),
           label: "",
         ),
