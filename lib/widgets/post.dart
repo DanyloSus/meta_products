@@ -1,151 +1,169 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:meta_products/data/users.dart';
 
-import '../classes/post_data.dart';
-
-class Post extends StatefulWidget {
-  const Post(
-      {super.key,
-      required this.name,
-      required this.time,
-      required this.content,
-      required this.comments,
-      required this.likes});
+class Post extends StatelessWidget {
+  const Post({
+    super.key,
+    required this.name,
+    required this.description,
+    required this.time,
+    required this.imageProfile,
+    required this.image,
+    required this.likes,
+    required this.comments,
+  });
 
   final String name;
+  final String description;
   final String time;
-  final String content;
-  final List<PostData> comments;
+  final String imageProfile;
+  final String image;
   final int likes;
-
-  @override
-  State<Post> createState() => _PostState();
-}
-
-class _PostState extends State<Post> {
-  bool isLiked = false;
-
-  heartTap() {
-    setState(() {
-      isLiked = !isLiked;
-    });
-  }
+  final int comments;
 
   @override
   Widget build(BuildContext context) {
-    final image =
-        users.where((element) => element.username == widget.name).single.image;
-
     return Container(
       decoration: const BoxDecoration(
-          border: Border(
-              bottom: BorderSide(color: Color.fromRGBO(242, 242, 242, 1)))),
-      child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 16),
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            Image.asset(
-              "assets/images/profile/$image.png",
-              width: 36,
-              height: 36,
-            ),
-            const SizedBox(
-              width: 8,
-            ),
-            Column(
+        border: Border(
+          bottom:
+              BorderSide(color: Color.fromRGBO(170, 170, 170, 1), width: 0.5),
+        ),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Padding(
+            padding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
+            child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                SizedBox(
-                  width: 400,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        widget.name,
-                        style: const TextStyle(
-                            fontSize: 16, fontWeight: FontWeight.w600),
-                      ),
-                      Row(
-                        children: [
-                          Text(
-                            widget.time,
-                            style: const TextStyle(
-                                fontSize: 12,
-                                color: Color.fromRGBO(160, 160, 160, 1)),
-                          ),
-                          const SizedBox(
-                            width: 8,
-                          ),
-                          SvgPicture.asset(
-                            "assets/icons/dots.svg",
-                            width: 24,
-                            height: 24,
-                          ),
-                        ],
-                      )
-                    ],
-                  ),
-                ),
-                Text(
-                  widget.content,
-                  style: const TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w300,
-                  ),
-                ),
                 Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    IconButton(
-                      onPressed: heartTap,
-                      icon: SvgPicture.asset(
-                        "assets/icons/${isLiked ? "heart_on" : "heart"}.svg",
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(10),
+                      child: Image.asset(
+                        "assets/images/profile/$imageProfile.png",
+                        width: 50,
+                        height: 50,
+                        fit: BoxFit.cover,
                       ),
-                      style: IconButton.styleFrom(
-                        fixedSize: const Size(0, 24),
-                      ),
-                    ),
-                    SvgPicture.asset(
-                      "assets/icons/message.svg",
-                      width: 24,
-                      height: 24,
                     ),
                     const SizedBox(
-                      width: 12,
+                      width: 17,
+                    ),
+                    Expanded(
+                      child: SizedBox(
+                        width: 999,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            SizedBox(
+                              width: 196,
+                              child: Text(
+                                name,
+                                style: const TextStyle(
+                                    fontSize: 14, fontWeight: FontWeight.bold),
+                              ),
+                            ),
+                            Text(
+                              time,
+                              style: const TextStyle(
+                                color: Color.fromRGBO(85, 85, 85, 1),
+                                fontSize: 11,
+                              ),
+                            )
+                          ],
+                        ),
+                      ),
                     ),
                     SvgPicture.asset(
-                      "assets/icons/repost.svg",
-                      width: 24,
-                      height: 24,
-                    ),
-                    const SizedBox(
-                      width: 12,
-                    ),
-                    SvgPicture.asset(
-                      "assets/icons/send.svg",
-                      width: 24,
-                      height: 24,
+                      "assets/icons/dots.svg",
+                      width: 3,
+                      height: 15,
                     ),
                   ],
                 ),
+                const SizedBox(
+                  height: 12,
+                ),
                 Text(
-                  "${widget.comments.length} replies  ·  ${widget.likes} likes",
-                  style: const TextStyle(
-                    color: Color.fromRGBO(
-                      160,
-                      160,
-                      160,
-                      1,
-                    ),
-                  ),
+                  description,
+                  style: const TextStyle(fontSize: 12),
                 )
               ],
-            )
-          ],
-        ),
+            ),
+          ),
+          Image.asset(
+            "assets/images/posts/$image.jpg",
+            width: double.infinity,
+            fit: BoxFit.cover,
+          ),
+          const SizedBox(
+            height: 15,
+          ),
+          Padding(
+            padding: const EdgeInsets.fromLTRB(20, 15, 20, 5),
+            child: Column(
+              children: [
+                Row(
+                  children: [
+                    SvgPicture.asset(
+                      "assets/icons/like.svg",
+                      height: 18,
+                    ),
+                    const SizedBox(
+                      width: 30,
+                    ),
+                    SvgPicture.asset(
+                      "assets/icons/comments.svg",
+                      height: 18,
+                    ),
+                    const SizedBox(
+                      width: 30,
+                    ),
+                    SvgPicture.asset(
+                      "assets/icons/send.svg",
+                      height: 18,
+                    ),
+                  ],
+                ),
+                const SizedBox(
+                  height: 15,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Row(
+                      children: [
+                        SvgPicture.asset("assets/icons/roundLike.svg"),
+                        const SizedBox(
+                          width: 6,
+                        ),
+                        Text(
+                          "Liked by $likes people",
+                          style: const TextStyle(
+                            fontSize: 11,
+                          ),
+                        ),
+                      ],
+                    ),
+                    Text(
+                      "$comments comments",
+                      style: const TextStyle(
+                        fontSize: 11,
+                      ),
+                    )
+                  ],
+                )
+              ],
+            ),
+          )
+        ],
       ),
     );
   }
